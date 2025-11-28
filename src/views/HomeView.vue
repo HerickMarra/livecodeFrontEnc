@@ -3,21 +3,36 @@ import { ref } from 'vue'
 import axios from 'axios'
 
 const cpf = ref('');
-function enviarCpf(){
+const lista = ref([]);
 
-  axios.post('http://127.0.0.1:8000/api/cpf',{
+function enviarCpf() {
+
+  axios.post('http://142.93.89.122/api/cpf', {
     cpf: cpf.value
-  }).then((response) =>{
+  }).then((response) => {
 
-  })
+    lista.value = response.data;
+
+  }).catch((err) => {
+    console.log("Erro:", err);
+  });
 
 }
-
 </script>
 
 <template>
   <main>
-    <textarea name="" id="" v-model="cpf"></textarea><br>
+    <textarea v-model="cpf"></textarea><br>
     <button @click="enviarCpf()">Enviar Cpf</button>
+
+    <hr>
+
+    <ul>
+      <li v-for="(item, index) in lista" :key="index">
+        {{ item }}
+      </li>
+    </ul>
+
   </main>
 </template>
+
